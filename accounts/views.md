@@ -69,3 +69,101 @@ The request body must contain the following fields:
 2. If the data is valid and the email is not already taken, a new agent is created and a success response is returned.
 3. If there is an error (missing fields or email already exists), an error response is returned with a message explaining the issue.
 ```
+
+
+Here's the documentation for the `CreateCustomerApiView` and `LoginApiView` views in Markdown format:
+
+---
+
+## API Documentation
+
+### **POST** `/api/create-customer/` - **Create Customer**
+
+#### Description
+This endpoint allows the creation of a customer. It accepts the necessary fields to register a customer and ensures that the provided email is unique.
+
+#### Request Body
+```json
+{
+    "email": "customer@example.com",
+    "password": "password123",
+    "first_name": "John",
+    "last_name": "Doe",
+    "username": "johndoe"
+}
+```
+
+#### Fields:
+- `email` (required): The email of the customer (must be unique).
+- `password` (required): The password for the customer (should be strong).
+- `first_name` (optional): The first name of the customer.
+- `last_name` (optional): The last name of the customer.
+- `username` (optional): The username for the customer.
+
+#### Response
+**Success (201 Created)**
+```json
+{
+    "message": "Customer John Doe (customer@example.com) created successfully."
+}
+```
+
+**Error (400 Bad Request)**
+```json
+{
+    "error": "Email already exists for another user."
+}
+```
+
+#### Notes:
+- If the email already exists in the system, the request will fail.
+- The customer is created with `is_customer=True` and `is_agent=False` roles by default.
+
+---
+
+### **POST** `/api/login/` - **Login**
+
+#### Description
+This endpoint allows users to log in using their email and password. Upon successful authentication, the user receives JWT tokens (access and refresh) for subsequent requests.
+
+#### Request Body
+```json
+{
+    "email": "customer@example.com",
+    "password": "password123"
+}
+```
+
+#### Fields:
+- `email` (required): The email of the user.
+- `password` (required): The password for the user.
+
+#### Response
+**Success (200 OK)**
+```json
+{
+    "message": "Login successful.",
+    "refresh": "refresh_token_here",
+    "access": "access_token_here"
+}
+```
+
+**Error (400 Bad Request)**
+```json
+{
+    "error": "Email and password are required."
+}
+```
+
+**Error (401 Unauthorized)**
+```json
+{
+    "error": "Invalid credentials."
+}
+```
+
+#### Notes:
+- The response includes both `access` and `refresh` JWT tokens.
+- The `access_token` is used for authentication in subsequent API requests.
+- The `refresh_token` is used to obtain new `access_tokens` when the current one expires.
+- Token expiration should be handled by the frontend.
