@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import CreateAgentApiView,CreateCustomerApiView,UserListApiView
+from .views import CreateAgentApiView,CreateCustomerApiView,UserListApiView ,LoginApiView
 
 urlpatterns=[
     path('create-agent/', CreateAgentApiView.as_view(), name='create_agent'),
     path('create-customer/', CreateCustomerApiView.as_view(), name='create_customer'),
     path('user-list/', UserListApiView.as_view(), name='user_list'),
+    path('login/', LoginApiView.as_view(), name='login'),
 ]
