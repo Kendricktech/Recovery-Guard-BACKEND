@@ -25,8 +25,6 @@ SECRET_KEY = 'django-insecure-m480z^(te-ckt5yg!v28e7%krw9uv*7elb5dj=1$u2y@)yng(1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -40,8 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'accounts' #custom user auth app
-      # Connect API app
+    'accounts', #custom user auth app
+    'cases',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -139,7 +138,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 
 AUTH_USER_MODEL ="accounts.CustomUser"
 
-
+CORS_ALLOW_ALL_ORIGINS=False
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    # Add any other domains you need
+]
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    # Add any other frontend URLs you're using
+]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':[
@@ -148,3 +156,28 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+
+# In settings.py
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),  # Adjust as needed
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),     # Adjust as needed
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
+import os
+
+# Define the root directory for media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Store media files in a 'media' folder in the project root
+
+# URL that will be used to serve the media files
+MEDIA_URL = '/media/'
+
+# Static files for serving images, docs, and other media in development
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # Store static files in a 'static' folder in the project root
+]

@@ -16,6 +16,11 @@ __pycache__/
 **/migrations/*.py
 **/migrations/*.pyc
 
+# /media/ and /static/ files
+/media/
+/static/
+# Ignore all .env files
+
 # Environment variables
 .env
 .env.*
