@@ -40,3 +40,4 @@ class Message(models.Model):
 
     def __str__(self):
         return f"Message from {self.sender.email} in case '{self.case.title}'"
+

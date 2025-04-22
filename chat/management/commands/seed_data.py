@@ -5,6 +5,8 @@ from django.contrib.auth import get_user_model
 from chat.models import Message
 from cases.models import Case, SupportingDocuments
 from faker import Faker
+from django.conf import settings
+from django.core.management import call_command
 import os
 from django.core.files import File
 

@@ -30,6 +30,9 @@ DEBUG = True
 
 INSTALLED_APPS = [
     'jazzmin',
+    'chat',
+    'notifications',
+    'cases',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,8 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'accounts', #custom user auth app
-    'cases',
-    'chat',
+   
 ]
 
 MIDDLEWARE = [
@@ -151,8 +153,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':[
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        
         'rest_framework.authentication.TokenAuthentication',
     ]
 }

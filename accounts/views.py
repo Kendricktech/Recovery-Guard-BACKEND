@@ -281,3 +281,20 @@ class DashBoardApiView(APIView):
         }
 
         return JsonResponse(dashboard_data, status=status.HTTP_200_OK, safe=False)
+from django.contrib.auth.tokens import default_token_generator  
+class PasswordRecoveryView(APIView):
+    def post(self, request):
+        email = request.data.get('email')
+        if not email:
+            return JsonResponse({'error': 'Email is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = CustomUser.objects.get(email=email)
+            # Here you would typically send an email with a password reset link
+            return JsonResponse({'message': 'Password recovery email sent.'}, status=status.HTTP_200_OK)
+        except CustomUser.DoesNotExist:
+            return JsonResponse({'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
+   
+
+# Class NotificationListView(ApiView):
+#     pass
