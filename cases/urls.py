@@ -4,4 +4,5 @@ from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     path('cases/',CaseListApiView.as_view(),name='case-list'),
+    
 ]

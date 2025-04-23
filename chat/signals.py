@@ -31,3 +31,4 @@ def notify_on_case_update(sender, instance, **kwargs):
             message=f"Case '{instance.title}' has been updated",
             case=instance
         )
+z
