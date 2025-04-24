@@ -36,4 +36,7 @@ class UnreadCountView(APIView):
             recipient=request.user,
             is_read=False
         ).count()
+        if count == 0:
+            return Response({"unread_count": 0})
+        # If there are unread notifications, return the count
         return Response({"unread_count": count})
