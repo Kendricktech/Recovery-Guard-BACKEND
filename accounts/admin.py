@@ -1,5 +1,8 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
 
-# Register your models here.
-admin.site.register(CustomUser)
+@admin.register(CustomUser)
+class CustomUserAdmin(UserAdmin):
+    search_fields = ['email', 'first_name', 'last_name']  # or however your model is defined
+    list_display = ['email', 'is_agent', 'is_customer']
