@@ -124,6 +124,7 @@ class LoginApiView(APIView):
             'message': 'Login successful.',
             'refresh': str(refresh),
             'access': str(refresh.access_token),
+            'userId':str(user.id),
         }, status=status.HTTP_200_OK)
 
 
