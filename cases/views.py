@@ -17,7 +17,8 @@ class CaseListApiView(APIView):
         # Logic to retrieve and return a list of cases
         pass
         file = os.write(data,'r')
-        file.saveimport os
+        file.save
+import os
 from datetime import datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
