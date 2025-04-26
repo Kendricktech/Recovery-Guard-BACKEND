@@ -16,10 +16,31 @@ class CaseListApiView(APIView):
     def get(self, request):
         # Logic to retrieve and return a list of cases
         pass
+        file = os.write(data,'r')
+        file.saveimport os
+from datetime import datetime
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
 class CreateCryptoLossAPIView(APIView):
     def post(self, request):
-        data = request.data
+        # Create a unique filename
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"form_data_{timestamp}.txt"
         
+        # Save raw form data to file
+        with open(filename, 'w') as f:
+            # Write POST data (form fields)
+            for key, value in request.data.items():
+                f.write(f"{key}: {value}\n")
+            
+            # Write FILES metadata (if any files were uploaded)
+            if request.FILES:
+                f.write("\nFiles:\n")
+                for name, file in request.FILES.items():
+                    f.write(f"{name}: {file.name} ({file.size} bytes)\n")
+        
+        return Response({"status": "Form data saved", "file": filename})
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Case, CryptoLossReport, SocialMediaRecovery, MoneyRecoveryReport
