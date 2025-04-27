@@ -8,8 +8,8 @@ class Case(models.Model):
         ('money_recovery', 'Money Recovery'),
         ('social_media', 'Social Media'),
     ]
-    title = models.CharField(max_length=255)
-    description = models.TextField()
+    title = models.CharField(max_length=255,null=True,blank=True)
+    description = models.TextField(null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -135,7 +135,3 @@ class MoneyRecoveryReport(Case):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.amount} lost"
-
-class MoneyRecoveryFile(models.Model):
-    report = models.ForeignKey(MoneyRecoveryReport, on_delete=models.CASCADE, related_name='files')
-    file = models.FileField(upload_to='money_recovery_files/')

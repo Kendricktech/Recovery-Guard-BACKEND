@@ -1,30 +1,12 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import *
 from rest_framework.permissions import IsAuthenticated
-
-from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from django.http import JsonResponse
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import status
 
-# CreatSe your views here.
-class CaseListApiView(APIView):
-    def get(self, request):
-        # Logic to retrieve and return a list of cases
-        pass
-class CreateCryptoLossAPIView(APIView):
-    def post(self, request):
-        data = request.data
-        
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .models import Case, CryptoLossReport, SocialMediaRecovery, MoneyRecoveryReport
-from .serializers import CaseSerializer, CryptoLossReportSerializer, SocialMediaRecoverySerializer, MoneyRecoveryReportSerializer
-
+from .models import Case
+from .serializers import *
 class CaseDetailView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
@@ -65,3 +47,31 @@ class CaseDetailView(APIView):
         except Exception as e:
             # Generic catch-all for any other exceptions
             return Response({"error": f"An error occurred: {str(e)}"}, status=500)
+
+class CaseListApiView(APIView):
+    def get(self, request):
+        # Logic to retrieve and return a list of cases
+        pass
+
+
+
+
+class CreateMoneyRecoveryApiView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
+    
+    def post(self, request):
+        # Correctly pass the context with the user
+        serializer = MoneyRecoveryReportSerializer(
+            data=request.data,
+            context={'request': request, 'user': request.user}
+        )
+        print(request.user)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        # Fix the error response
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

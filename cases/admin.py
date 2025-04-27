@@ -5,7 +5,6 @@ from .models import (
     CryptoLossReport,
     SocialMediaRecovery,
     MoneyRecoveryReport,
-    MoneyRecoveryFile
 )
 
 
@@ -43,6 +42,3 @@ class MoneyRecoveryReportAdmin(admin.ModelAdmin):
     list_filter = ('bank', 'submitted_at')
 
 
-@admin.register(MoneyRecoveryFile)
-class MoneyRecoveryFileAdmin(admin.ModelAdmin):
-    list_display = ('report', 'file')
