@@ -42,3 +42,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+class Emails(models.Model):
+    email = models.EmailField(null=False, blank=False)
+    first_name = models.CharField(max_length=30, null=True, blank=True)
+    last_name = models.CharField(max_length=30, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.first_name or ''} {self.last_name or ''}".strip()

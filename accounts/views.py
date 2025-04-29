@@ -299,3 +299,28 @@ class PasswordRecoveryView(APIView):
 
 # Class NotificationListView(ApiView):
 #     pass
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Emails
+
+class CreateEmailLeadApiView(APIView):
+    def post(self, request):
+        email = request.data.get('email')
+        if email:
+            Emails.objects.create(email=email)
+            return Response({"message": "Email saved successfully."}, status=status.HTTP_201_CREATED)
+        return Response({"error": "Email is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class EmailLeadsApiView(APIView):
+    # authentication_classes = [JWTAuthentication]
+    # permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        if user:  # Make sure the user is an agent
+            leads = Emails.objects.all()  # Get all email leads
+            leads_data = [{"email": lead.email, "first_name": lead.first_name, "last_name": lead.last_name} for lead in leads]
+            return Response({"leads": leads_data}, status=200)
+        return Response({"error": "Unauthorized access."}, status=403)
