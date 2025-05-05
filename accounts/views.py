@@ -272,10 +272,7 @@ class DashBoardApiView(APIView):
                 'currentStepIndex': 2  # Placeholder — later tie to actual case status
             },
             'activity': [
-                {'icon': '📝', 'message': 'Case updated:', 'detail': 'ID#1234', 'time': '2 hrs ago'},
-                {'icon': '💬', 'message': 'New message from agent', 'time': '5 hrs ago'},
-                {'icon': '📄', 'message': 'Document uploaded:', 'detail': 'bank_statement.pdf', 'time': '1 day ago'},
-                {'icon': '✅', 'message': 'Verification complete', 'time': '2 days ago'}
+           
             ],
             'messages': messages_data,
             'cases': cases_data
